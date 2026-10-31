@@ -180,6 +180,7 @@ export type InterviewState =
   | "connecting"
   | "active"
   | "reconnecting"
+  | "connection_failed"
   | "draining_audio"
   | "ending"
   | "complete";
@@ -196,7 +197,8 @@ export interface WsControlMessage {
     | "reconnected"
     | "speaker_changed"
     | "preparing_to_end"
-    | "error";
+    | "error"
+    | "retry_exhausted";
   speaker?: "candidate" | "ai";
   role?: "candidate" | "ai";
   text?: string;
