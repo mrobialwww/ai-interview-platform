@@ -39,21 +39,29 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background">
-            <div className="w-full max-w-sm space-y-6">
+        <div className="min-h-screen flex items-center justify-center bg-background px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg space-y-6 sm:space-y-8 p-4 sm:p-6 lg:p-8">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold">AI Interview</h1>
-                    <p className="text-sm text-muted-foreground mt-1">Sign in to your account</p>
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">AI Interview</h1>
+                    <p className="text-sm sm:text-base text-muted-foreground mt-2">Sign in to your account</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                     <div className="space-y-1.5">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <Label htmlFor="email" className="text-sm sm:text-base">Email</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            autoComplete="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="text-sm sm:text-base"
+                        />
                     </div>
 
                     <div className="space-y-1.5">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password" className="text-sm sm:text-base">Password</Label>
                         <Input
                             id="password"
                             type="password"
@@ -61,12 +69,13 @@ export default function LoginPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            className="text-sm sm:text-base"
                         />
                     </div>
 
-                    {error && <p className="text-sm text-destructive">{error}</p>}
+                    {error && <p className="text-sm sm:text-base text-destructive text-center">{error}</p>}
 
-                    <Button type="submit" className="w-full" disabled={loading}>
+                    <Button type="submit" className="w-full py-2.5 sm:py-3 text-sm sm:text-base" disabled={loading}>
                         {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                         Sign in
                     </Button>
