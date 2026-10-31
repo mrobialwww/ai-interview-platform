@@ -242,15 +242,15 @@ export default function InterviewPage() {
     // ── State A: Pre-start ──────────────────────────────────────────────────
     if (interviewState === "idle") {
         return (
-            <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
-                <div className="text-center space-y-1">
-                    <h1 className="text-xl font-semibold">{candidateInfo?.role_title ?? "AI Interview"}</h1>
-                    {candidateInfo && <p className="text-sm text-muted-foreground">{candidateInfo.time_limit_min} minutes</p>}
+            <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-6 sm:space-y-8">
+                <div className="text-center space-y-1 sm:space-y-2">
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold">{candidateInfo?.role_title ?? "AI Interview"}</h1>
+                    {candidateInfo && <p className="text-sm sm:text-base text-muted-foreground">{candidateInfo.time_limit_min} minutes</p>}
                 </div>
 
                 {!hardwareCheckDone ? (
-                    <div className="space-y-4">
-                        <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-1.5 text-muted-foreground">
+                    <div className="space-y-4 sm:space-y-6">
+                        <div className="bg-muted/50 rounded-lg p-4 sm:p-6 text-sm sm:text-base space-y-1.5 sm:space-y-2 text-muted-foreground">
                             <p>• This is a voice interview. Make sure you're in a quiet place.</p>
                             <p>• The AI will ask follow-up questions — there are no scripts.</p>
                             <p>• The session will last up to {candidateInfo?.time_limit_min ?? "—"} minutes.</p>
@@ -264,9 +264,9 @@ export default function InterviewPage() {
                         />
                     </div>
                 ) : (
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2.5">
-                            <CheckCircle className="h-4 w-4 shrink-0" />
+                    <div className="space-y-4 sm:space-y-6">
+                        <div className="flex items-center gap-2 text-sm sm:text-base text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 sm:px-6 py-2.5 sm:py-3">
+                            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
                             <span>Hardware checks passed. You're ready to start.</span>
                         </div>
                         <Button className="w-full" size="lg" onClick={startInterview}>
@@ -285,14 +285,14 @@ export default function InterviewPage() {
         const retriesLeft = MAX_MANUAL_RETRIES - manualRetryCount;
         const canRetry = retriesLeft > 0;
         return (
-            <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-6">
-                <div className="text-4xl">⚠️</div>
-                <div className="space-y-2">
-                    <h2 className="text-xl font-semibold">Koneksi interview bermasalah</h2>
-                    <p className="text-sm text-muted-foreground">
+            <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-center space-y-6 sm:space-y-8">
+                <div className="text-4xl sm:text-5xl">⚠️</div>
+                <div className="space-y-2 sm:space-y-3">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold">Koneksi interview bermasalah</h2>
+                    <p className="text-sm sm:text-base text-muted-foreground">
                         Kami tidak dapat menyambungkan koneksi audio interview Anda.
                         {captureError && (
-                            <span className="block mt-1 text-xs text-red-600">
+                            <span className="block mt-2 text-xs sm:text-sm text-red-600">
                                 {captureError.includes("Permission") || captureError.includes("NotAllowed")
                                     ? "Akses mikrofon ditolak. Pastikan izin mikrofon diizinkan di browser Anda, lalu coba lagi."
                                     : "Perangkat audio tidak dapat diinisialisasi. Pastikan mikrofon terhubung dan tidak digunakan aplikasi lain."}
@@ -301,24 +301,24 @@ export default function InterviewPage() {
                     </p>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-3 sm:space-y-4">
                     {canRetry ? (
-                        <Button className="w-full" size="lg" onClick={handleManualRetry}>
+                        <Button className="w-full sm:w-auto px-6 py-3 sm:py-4 text-base sm:text-lg" size="lg" onClick={handleManualRetry}>
                             Coba sambungkan kembali
-                            <span className="ml-2 text-xs opacity-70">({retriesLeft} kesempatan tersisa)</span>
+                            <span className="ml-2 text-xs sm:text-sm opacity-70">({retriesLeft} kesempatan tersisa)</span>
                         </Button>
                     ) : (
-                        <div className="text-sm text-muted-foreground bg-muted/50 rounded-lg px-4 py-3">
+                        <div className="text-sm sm:text-base text-muted-foreground bg-muted/50 rounded-lg px-4 sm:px-6 py-3 sm:py-4">
                             Batas percobaan ulang telah tercapai. Silakan akhiri interview dan hubungi asesor Anda.
                         </div>
                     )}
 
-                    <Button variant="outline" size="lg" className="w-full" onClick={endInterviewSafely}>
+                    <Button variant="outline" className="w-full sm:w-auto px-6 py-3 sm:py-3 text-base sm:text-base" size="lg" onClick={endInterviewSafely}>
                         Akhiri interview dengan aman
                     </Button>
                 </div>
 
-                <p className="text-xs text-muted-foreground">Jangan tutup halaman ini. Hubungi asesor jika masalah berlanjut.</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Jangan tutup halaman ini. Hubungi asesor jika masalah berlanjut.</p>
             </div>
         );
     }
@@ -326,10 +326,10 @@ export default function InterviewPage() {
     // ── State F: Complete ───────────────────────────────────────────────────
     if (interviewState === "complete") {
         return (
-            <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-4">
-                <div className="text-4xl">✅</div>
-                <h2 className="text-xl font-semibold">Interview Complete</h2>
-                <p className="text-sm text-muted-foreground">
+            <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-center space-y-4 sm:space-y-6">
+                <div className="text-4xl sm:text-5xl lg:text-6xl">✅</div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold">Interview Complete</h2>
+                <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
                     Thank you. The interview has been recorded.
                     <br />
                     The hiring team will review your results and follow up with you.
@@ -343,10 +343,10 @@ export default function InterviewPage() {
     const candidateSpeaking = speaker === "candidate";
 
     return (
-        <div className="max-w-xl mx-auto px-4 flex flex-col h-full">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col h-full min-h-screen">
             {/* Top bar */}
-            <div className="flex items-center justify-between py-3 border-b sticky top-12 bg-white z-10">
-                <span className="text-sm font-medium">AI Interview</span>
+            <div className="flex items-center justify-between py-3 sm:py-4 border-b sticky top-12 bg-white z-10">
+                <span className="text-sm sm:text-base font-medium">AI Interview</span>
                 {candidateInfo && (
                     <InterviewTimer totalSeconds={candidateInfo.time_limit_min * 60} running={interviewState === "active"} onExpired={endInterview} />
                 )}
@@ -355,12 +355,12 @@ export default function InterviewPage() {
             {/* Reconnecting banner */}
             {interviewState === "reconnecting" &&
                 (connectionLostLong ? (
-                    <div className="flex items-center gap-2 text-sm bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 py-2.5 mt-2">
+                    <div className="flex items-center gap-2 text-sm sm:text-base bg-red-50 border border-red-200 text-red-800 rounded-lg px-4 sm:px-6 py-2.5 sm:py-3 mt-2 sm:mt-3 mx-4 sm:mx-0">
                         <span className="animate-pulse">●</span>
                         <span>Connection is taking too long to restore. Please wait, and contact the interviewer if this persists.</span>
                     </div>
                 ) : (
-                    <div className="flex items-center gap-2 text-sm bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg px-4 py-2.5 mt-2">
+                    <div className="flex items-center gap-2 text-sm sm:text-base bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg px-4 sm:px-6 py-2.5 sm:py-3 mt-2 sm:mt-3 mx-4 sm:mx-0">
                         <span className="animate-pulse">●</span>
                         <span>Briefly reconnecting — please wait a moment.</span>
                     </div>
@@ -368,7 +368,7 @@ export default function InterviewPage() {
 
             {/* Reconnected prompt */}
             {reconnectedPrompt && (
-                <div className="flex items-center justify-between text-sm bg-blue-50 border border-blue-200 text-blue-800 rounded-lg px-4 py-2.5 mt-2">
+                <div className="flex items-center justify-between text-sm sm:text-base bg-blue-50 border border-blue-200 text-blue-800 rounded-lg px-4 sm:px-6 py-2.5 sm:py-3 mt-2 sm:mt-3 mx-4 sm:mx-0">
                     <span>
                         Reconnected — please say <strong>"check"</strong> or continue your answer to resume.
                     </span>
@@ -379,13 +379,13 @@ export default function InterviewPage() {
             )}
 
             {/* Voice indicator */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-6 py-8">
+            <div className="flex-1 flex flex-col items-center justify-center gap-6 py-8 sm:py-10">
                 {interviewState === "connecting" ? (
-                    <div className="text-sm text-muted-foreground animate-pulse">Connecting...</div>
+                    <div className="text-sm sm:text-base text-muted-foreground animate-pulse">Connecting...</div>
                 ) : interviewState === "draining_audio" ? (
                     <div className="flex flex-col items-center gap-2 text-center">
                         <VoiceBars active={true} label="AI speaking" variant="ai" />
-                        <p className="text-xs text-muted-foreground">Wrapping up...</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Wrapping up...</p>
                     </div>
                 ) : (
                     <>
@@ -395,7 +395,7 @@ export default function InterviewPage() {
 
                         {/* Transcript */}
                         {transcript.length > 0 && (
-                            <div className="w-full space-y-2 overflow-y-auto max-h-[60vh]">
+                            <div className="w-full space-y-2 sm:space-y-3 overflow-y-auto max-h-[60vh]">
                                 {transcript.map((turn, i) => (
                                     <TranscriptBubble key={i} speaker={turn.speaker} text={turn.text} />
                                 ))}
@@ -406,11 +406,11 @@ export default function InterviewPage() {
             </div>
 
             {/* Bottom bar */}
-            <div className="border-t py-3 flex items-center justify-between gap-4 sticky bottom-0 bg-white">
+            <div className="border-t py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-4 sticky bottom-0 bg-white">
                 <ConnectionStatus state={wsConnectionStatus} />
 
-                <div className="flex items-center gap-3">
-                    <Button variant={micMuted ? "destructive" : "outline"} size="sm" onClick={toggleMic}>
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                    <Button variant={micMuted ? "destructive" : "outline"} size="sm" onClick={toggleMic} className="w-full sm:w-auto">
                         {micMuted ? (
                             <>
                                 <MicOff className="h-3.5 w-3.5 mr-1.5" /> Muted
@@ -424,7 +424,7 @@ export default function InterviewPage() {
 
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" className="w-full sm:w-auto">
                                 End Interview
                             </Button>
                         </AlertDialogTrigger>
@@ -443,7 +443,7 @@ export default function InterviewPage() {
                         <Button
                             variant="outline"
                             size="sm"
-                            className="text-xs opacity-50"
+                            className="text-xs opacity-50 w-full sm:w-auto"
                             onClick={() => sendJson({ type: "debug_force_reconnect" })}
                         >
                             ⚡ Force reconnect
