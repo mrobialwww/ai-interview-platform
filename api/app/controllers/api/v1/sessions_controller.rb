@@ -22,6 +22,13 @@ module Api
       def create
         assessment = Assessment.find(params[:assessment_id])
 
+        # GAP-01: Validate FRONTEND_BASE_URL is configured for candidate-facing links
+        frontend_url = ENV.fetch('FRONTEND_BASE_URL', nil)
+        if frontend_url.blank?
+          Rails.logger.error("[Sessions] INVITE_ORIGIN_INVALID: FRONTEND_BASE_URL not configured")
+          return json_error("Link interview belum dapat dibuat karena konfigurasi aplikasi belum lengkap.", :unprocessable_entity)
+        end
+
         session = assessment.sessions.new(
           candidate_id:   params.dig(:session, :candidate_id),
           candidate_name: params.dig(:session, :candidate_name).presence,

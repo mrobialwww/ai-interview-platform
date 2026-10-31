@@ -116,6 +116,7 @@ class AudioWebSocketMiddleware
 
         unless session.assessment.system_prompt.present?
           EM.schedule do
+            Rails.logger.error("[AudioWS] AUDIO_CONNECTION_FAILED: session=#{session.id} code=no_system_prompt")
             send_json(browser_ws, type: 'error', code: 'no_system_prompt',
                                   message: 'Assessment configuration is incomplete.', recoverable: false)
             browser_ws.close
@@ -420,7 +421,8 @@ class AudioWebSocketMiddleware
     if state.reconnect_attempts < MAX_RECONNECT_ATTEMPTS
       schedule_gemini_reconnect(browser_ws, state, code)
     else
-      Rails.logger.error("[AudioWS] AUDIO_RETRY_EXHAUSTED session=#{state.session&.id} total_attempts=#{state.reconnect_attempts}")
+      Rails.logger.error("[AudioWS] AUDIO_RUNTIME_UNHEALTHY: session=#{state.session&.id} code=#{code} reason=#{reason}")
+      Rails.logger.error("[AudioWS] AUDIO_RETRY_EXHAUSTED: session=#{state.session&.id} total_attempts=#{state.reconnect_attempts}")
       Sessions::EndHandler.new(state.session).call(reason: 'error')
       # Send retry_exhausted (not session_ended) so frontend can show the connection_failed state rather than the "interview complete" screen.
       send_json(browser_ws, type: 'retry_exhausted', code: 'AUDIO_RETRY_EXHAUSTED',
